@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Question;
 class Predmet extends Model
 {
     use HasFactory;
@@ -12,4 +12,8 @@ class Predmet extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function questions(){
+        return $this->hasMany(Question::class);
+    }
 }

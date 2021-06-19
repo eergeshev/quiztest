@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container shadow p-3 mb-5 bg-white rounded" style="height: 500px">
+    <div class="container shadow p-3 mb-5 bg-white rounded">
         <h4 style="text-align: center">Все предметы</h4>
         <div style="margin-left: 10%">
             <form action="{{ route('predmet-store')}}" method="POST">

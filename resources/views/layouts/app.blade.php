@@ -23,22 +23,47 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                @guest
+                @else
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Тест
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 200px">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 300px">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"> <a class="nav-link" href="{{ route('home')}}">Предметы</a> </li>
-                    </ul>
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"> <a class="nav-link" href="{{ route('predmet-index')}}">Добавить предметы</a> </li>
-                    </ul>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('student-studentresult')}}">Результат</a> </li>
+                        @guest
+                          <li class="nav-item"></li>
+                        @else
+                          @if(auth()->user()->role->name == 'admin')
+                            <li class="nav-item"> <a class="nav-link" href="{{ route('predmet-index')}}">Добавить предмет</a> </li>
 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#"  id="client" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Вопросы</a> 
+                                <div style="border: 0px" class="dropdown-menu" aria-labelledby="client">
+                                    <a class="dropdown-item" href="{{ route('question-create')}}">Добавить</a>
+                                <a class="dropdown-item" href="{{route('question-index')}}">Все вопросы</a>
+                                {{-- <a class="dropdown-item" href="{{route('appointment-dashboard')}}">Главный</a> --}}
+                                </div>   
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#"  id="client" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Студенты</a> 
+                                <div style="border: 0px" class="dropdown-menu" aria-labelledby="client">
+                                    <a class="dropdown-item" href="{{ route('student-index')}}">Все студенты</a>
+                                    <a class="dropdown-item" href="{{route('student-create')}}">Добавить студент</a>
+                                {{-- <a class="dropdown-item" href="{{route('appointment-dashboard')}}">Главный</a> --}}
+                                </div>   
+                            </li>
+                            @endif
+                        @endguest
+
+                    </ul>
+                    @endguest
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -49,11 +74,11 @@
                                 </li>
                             @endif
 
-                            @if (Route::has('register'))
+                            {{-- @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
+                            @endif --}}
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -77,7 +102,7 @@
                 </div>
             </div>
         </nav>
-
+        
         <main class="py-4">
             @yield('content')
         </main>
